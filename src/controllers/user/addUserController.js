@@ -1,8 +1,8 @@
 const addUserHandler = require("../../handlers/user/addUserHandler");
 const addUserController = async (req, res) => {
   try {
-    const { name, location, phone } = req.body;
-    const newUser = await addUserHandler(name, location, phone);
+    const { name, location, phone, message } = req.body;
+    const newUser = await addUserHandler(name, location, phone, message);
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error);
