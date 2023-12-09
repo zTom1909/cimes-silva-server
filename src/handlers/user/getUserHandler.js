@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { User } = require("../../db");
 const getUserHandler = async (amount, order, filters) => {
   const { _start, _end } = amount;
@@ -5,11 +6,22 @@ const getUserHandler = async (amount, order, filters) => {
   const { name, location, phone } = filters;
 
   let searchFilters = {};
-  if (name) searchFilters.name = name;
-  if (location) searchFilters.location = location;
-  if (phone) searchFilters.phone = phone;
+  if (name)
+    searchFilters.name = {
+      [Op.iLike]: `%${name}%`,
+    };
+  if (location)
+    searchFilters.location = {
+      [Op.iLike]: `%${location}%`,
+    };
+  if (phone)
+    searchFilters.phone = {
+      [Op.iLike]: `%${phone}%`,
+    };
 
-  const users = await User.findAll({ where: searchFilters });
+  const users = await User.findAll({
+    where: searchFilters,
+  });
 
   const sortingFunction = (a, b) => {
     const sortOrder = _order === "ASC" ? 1 : -1;
