@@ -21,6 +21,10 @@ module.exports = (sequelize) => {
     },
     message: {
       type: DataTypes.STRING,
-    }
+    },
+    customer: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 };

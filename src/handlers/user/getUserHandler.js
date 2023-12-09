@@ -3,7 +3,7 @@ const { User } = require("../../db");
 const getUserHandler = async (amount, order, filters) => {
   const { _start, _end } = amount;
   const { _sort, _order } = order;
-  const { name, location, phone } = filters;
+  const { name, location, phone, customer } = filters;
 
   let searchFilters = {};
   if (name)
@@ -18,6 +18,7 @@ const getUserHandler = async (amount, order, filters) => {
     searchFilters.phone = {
       [Op.iLike]: `%${phone}%`,
     };
+  if (customer) searchFilters.customer = customer;
 
   const users = await User.findAll({
     where: searchFilters,

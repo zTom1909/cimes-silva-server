@@ -1,12 +1,12 @@
 const getUserHandler = require("../../handlers/user/getUserHandler");
 const getUserController = async (req, res) => {
   try {
-    const { _start, _end, _sort, _order, name, location, phone, message } =
+    const { _start, _end, _sort, _order, name, location, phone, message, customer } =
       req.query;
     const users = await getUserHandler(
       { _start, _end },
       { _sort, _order },
-      { name, location, phone, message }
+      { name, location, phone, message, customer }
     );
     const totalCount = users ? users.length : 0;
     res.setHeader("X-Total-Count", totalCount);
