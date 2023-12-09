@@ -3,6 +3,7 @@ const editUserController = async (req, res) => {
   try {
     const { id } = req.params
     const { location, phone, message, customer } = req.body;
+
     const user = await editUserHandler(id, {
       location,
       phone,

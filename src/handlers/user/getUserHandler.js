@@ -3,7 +3,7 @@ const { User } = require("../../db");
 const getUserHandler = async (amount, order, filters) => {
   const { _start, _end } = amount;
   const { _sort, _order } = order;
-  const { name, location, phone, customer } = filters;
+  const { name, location, phone, customer, createdAt } = filters;
 
   let searchFilters = {};
   if (name)
@@ -17,6 +17,10 @@ const getUserHandler = async (amount, order, filters) => {
   if (phone)
     searchFilters.phone = {
       [Op.iLike]: `%${phone}%`,
+    };
+  if (createdAt)
+    searchFilters.createdAt = {
+      [Op.between]: [`${createdAt} 00:00:00`, `${createdAt} 23:59:59`],
     };
   if (customer) searchFilters.customer = customer;
 
