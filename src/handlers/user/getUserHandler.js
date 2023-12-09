@@ -1,14 +1,47 @@
 const { User } = require("../../db");
-const getUserHandler = async (name, location, phone) => {
-  let filters = {};
+const getUserHandler = async (amount, order, filters) => {
+  const { _start, _end } = amount;
+  const { _sort, _order } = order;
+  const { name, location, phone } = filters;
 
-  if (name) filters.name = name;
-  if (location) filters.location = location;
-  if (phone) filters.phone = phone;
+  let searchFilters = {};
+  if (name) searchFilters.name = name;
+  if (location) searchFilters.location = location;
+  if (phone) searchFilters.phone = phone;
 
-  const users = await User.findAll({ where: filters });
+  const users = await User.findAll({ where: searchFilters });
 
-  return users;
+  const sortingFunction = (a, b) => {
+    const sortOrder = _order === "ASC" ? 1 : -1;
+    const aData = a.dataValues;
+    const bData = b.dataValues;
+
+    switch (_sort) {
+      case "name":
+        return sortOrder * aData.name.localeCompare(bData.name);
+      case "location":
+        return sortOrder * aData.location.localeCompare(bData.location);
+      case "phone":
+        return sortOrder * (aData.phone - bData.phone);
+      case "message":
+        return sortOrder * aData.message.localeCompare(bData.message);
+      case "createdAt":
+        const createdAtA = new Date(aData.createdAt).getTime();
+        const createdAtB = new Date(bData.createdAt).getTime();
+        return sortOrder * (createdAtA - createdAtB);
+      case "updatedAt":
+        const updatedAtA = new Date(aData.updatedAt).getTime();
+        const updatedAtB = new Date(bData.updatedAt).getTime();
+        return sortOrder * (updatedAtA - updatedAtB);
+      default:
+        return 0;
+    }
+  };
+
+  const orderedUsers = users.sort(sortingFunction);
+
+  if (_start) return orderedUsers.slice(_start, _end);
+  return orderedUsers;
 };
 
 module.exports = getUserHandler;

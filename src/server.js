@@ -6,7 +6,7 @@ const router = require("./routes");
 const server = express();
 
 server.use(morgan("dev"));
-server.use(cors());
+server.use(cors({ exposedHeaders: "X-Total-Count" }));
 server.use(express.json());
 
 server.use("/api", router);
