@@ -18,9 +18,9 @@ const getUserController = async (req, res) => {
       { _sort, _order },
       { name, location, phone, message, customer, createdAt }
     );
-    const totalCount = users ? users.length : 0;
+    const totalCount = users.totalCount
     res.setHeader("X-Total-Count", totalCount);
-    res.status(200).json(users);
+    res.status(200).json(users.data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });

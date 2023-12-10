@@ -56,9 +56,9 @@ const getUserHandler = async (amount, order, filters) => {
   };
 
   const orderedUsers = users.sort(sortingFunction);
-
-  if (_start) return orderedUsers.slice(_start, _end);
-  return orderedUsers;
+  const totalCount = orderedUsers.length
+  if (_start) return {data: orderedUsers.slice(_start, _end), totalCount};
+  return { data: orderedUsers, totalCount };
 };
 
 module.exports = getUserHandler;
