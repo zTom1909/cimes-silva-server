@@ -1,7 +1,7 @@
-const { Admin } = require("../../db");
-const deleteAdminHandler = async (id) => {
-  await Admin.update({ isDisabled: true }, { where: { id } });
-  return await Admin.findByPk(id);
+const { Product } = require("../../db");
+const deleteProductHandler = async (id) => {
+  await Product.update({ isDisabled: true }, { where: { id } });
+  return await Product.findByPk(id);
 };
 
-module.exports = deleteAdminHandler;
+module.exports = deleteProductHandler;

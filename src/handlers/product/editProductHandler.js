@@ -1,9 +1,11 @@
-const { Admin } = require("../../db");
-const getAdminByIdHandler = async (id, properties) => {
-  const validValues = Object.values(properties).filter((value) => !!value);
+const { Product } = require("../../db");
+const editProductHandler = async (id, properties) => {
+  const validValues = Object.values(properties).filter(
+    (value) => value !== undefined
+  );
   if (!validValues.length) throw new Error("Properties to edit are empty.");
-  await Admin.update(properties, { where: { id } })
-  return await Admin.findByPk(id);
+  await Product.update(properties, { where: { id } });
+  return await Product.findByPk(id);
 };
 
-module.exports = getAdminByIdHandler;
+module.exports = editProductHandler;

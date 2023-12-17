@@ -1,6 +1,6 @@
-const { Admin } = require("../../db");
-const getAdminByIdHandler = async (id) => {
-  return await Admin.findByPk(id);
+const { Product } = require("../../db");
+const getProductByIdHandler = async (id) => {
+  return await Product.findByPk(id);
 };
 
-module.exports = getAdminByIdHandler;
+module.exports = getProductByIdHandler;

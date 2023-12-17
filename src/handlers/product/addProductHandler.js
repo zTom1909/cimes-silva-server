@@ -1,6 +1,6 @@
-const { Admin } = require("../../db");
-const addAdminHandler = async (username, password, type) => {
-  return await Admin.create({ username, password, type });
+const { Product } = require("../../db");
+const addProductHandler = async (name, image) => {
+  return await Product.create({ name, image });
 };
 
-module.exports = addAdminHandler;
+module.exports = addProductHandler;
