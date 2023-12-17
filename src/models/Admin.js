@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -18,6 +19,10 @@ module.exports = (sequelize) => {
     type: {
       type: DataTypes.ENUM("admin", "superAdmin"),
       defaultValue: "admin",
+    },
+    isDisabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   });
 };

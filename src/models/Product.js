@@ -14,5 +14,9 @@ module.exports = (sequelize) => {
     image: {
       type: DataTypes.STRING,
     },
+    isDisabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 };
