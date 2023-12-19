@@ -1,9 +1,9 @@
 const { sequelize } = require("./src/db");
 const server = require("./src/server");
-const PORT = 3001;
 
-const { type } = require("./src/utils/config");
+const { type, server } = require("./src/utils/config");
 const isProduction = type === "production";
+const { port: PORT } = server
 
 sequelize
   .sync({ force: !isProduction })
