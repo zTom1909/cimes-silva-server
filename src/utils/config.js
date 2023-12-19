@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_URL } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_URL, TYPE } = process.env;
 
 module.exports = {
   database: {
@@ -9,4 +9,5 @@ module.exports = {
     name: DB_NAME,
     url: DB_URL
   },
+  type: TYPE
 };
