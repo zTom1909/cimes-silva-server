@@ -5,8 +5,8 @@ const AdminModel = require("./models/Admin")
 const ProductModel = require("./models/Product")
 
 const { database } = config;
-const { host, name, password, user } = database;
-const URL = `postgres://${user}:${password}@${host}/${name}`;
+const { host, name, password, user, url } = database;
+const URL = url || `postgres://${user}:${password}@${host}/${name}`;
 
 const sequelize = new Sequelize(URL, { logging: false, native: false });
 UserModel(sequelize);
