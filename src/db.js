@@ -8,7 +8,7 @@ const { database, type } = config;
 const { host, name, password, user, url } = database;
 const URL = url || `postgres://${user}:${password}@${host}/${name}`;
 const sqlConfig =
-  type === "production"
+  type === "production" || type === "reset"
     ? {
         logging: false,
         native: false,
