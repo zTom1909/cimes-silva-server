@@ -4,10 +4,11 @@ const app = require("./src/server");
 const { type, server } = require("./src/utils/config");
 const defaultAdmin = require("./src/utils/defaultAdmin");
 const isProduction = type === "production";
+const isReset = type === "reset";
 const { port: PORT } = server;
 
 sequelize
-  .sync({ force: !isProduction })
+  .sync({ force: (isReset || !isProduction) })
   .then(async () => {
     console.log("Database synced correctly");
     await defaultAdmin();
