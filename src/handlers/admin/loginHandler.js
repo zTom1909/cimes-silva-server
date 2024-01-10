@@ -1,6 +1,10 @@
+require("dotenv").config();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const ErrorHandler = require("../../utils/errorHandler");
 const { Admin } = require("../../db");
+
 const loginHandler = async (username, password) => {
   if (!username || !password)
     throw new ErrorHandler(
@@ -12,7 +16,7 @@ const loginHandler = async (username, password) => {
     where: { username },
   });
   if (!admin) throw new ErrorHandler("That admin account doesn't exist.", 404);
-  
+
   const adminData = admin.dataValues;
   if (adminData.isDisabled)
     throw new ErrorHandler("This account has been disabled.", 403);
@@ -20,12 +24,17 @@ const loginHandler = async (username, password) => {
   const successfulLogin = await bcrypt.compare(password, adminData.password);
   if (!successfulLogin) throw new ErrorHandler("Invalid credentials.", 401);
 
+  const token = jwt.sign({ username }, process.env.JWT_SECRET_KEY, {
+    expiresIn: "24h",
+  });
+
   delete adminData.password;
 
   return {
     success: true,
     message: "Login successful",
     admin: adminData,
+    token,
   };
 };
 
