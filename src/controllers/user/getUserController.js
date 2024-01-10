@@ -11,14 +11,15 @@ const getUserController = async (req, res) => {
       phone,
       message,
       customer,
+      isDisabled = false,
       createdAt,
     } = req.query;
     const users = await getUserHandler(
       { _start, _end },
       { _sort, _order },
-      { name, location, phone, message, customer, createdAt }
+      { name, location, phone, message, customer, isDisabled, createdAt }
     );
-    const totalCount = users.totalCount
+    const totalCount = users.totalCount;
     res.setHeader("X-Total-Count", totalCount);
     res.status(200).json(users.data);
   } catch (error) {

@@ -3,7 +3,7 @@ const { User } = require("../../db");
 const getUserHandler = async (amount, order, filters) => {
   const { _start, _end } = amount;
   const { _sort, _order } = order;
-  const { name, location, phone, customer, createdAt } = filters;
+  const { name, location, phone, customer, createdAt, isDisabled } = filters;
 
   let searchFilters = {};
   if (name)
@@ -23,6 +23,7 @@ const getUserHandler = async (amount, order, filters) => {
       [Op.between]: [`${createdAt} 00:00:00`, `${createdAt} 23:59:59`],
     };
   if (customer) searchFilters.customer = customer;
+  searchFilters.isDisabled = isDisabled;
 
   const users = await User.findAll({
     where: searchFilters,
@@ -56,8 +57,8 @@ const getUserHandler = async (amount, order, filters) => {
   };
 
   const orderedUsers = users.sort(sortingFunction);
-  const totalCount = orderedUsers.length
-  if (_start) return {data: orderedUsers.slice(_start, _end), totalCount};
+  const totalCount = orderedUsers.length;
+  if (_start) return { data: orderedUsers.slice(_start, _end), totalCount };
   return { data: orderedUsers, totalCount };
 };
 

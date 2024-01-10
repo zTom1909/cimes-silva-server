@@ -1,7 +1,7 @@
 const getProductHandler = require("../../handlers/product/getProductHandler");
 const getProductController = async (req, res) => {
   try {
-    const { _start, _end, _sort, _order, name, isDisabled } = req.query;
+    const { _start, _end, _sort, _order, name, isDisabled = false } = req.query;
     const products = await getProductHandler(
       { _start, _end },
       { _sort, _order },
